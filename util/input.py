@@ -59,9 +59,9 @@ def read_and_decode_submission(filename_queue):
     img_name = tf.decode_raw(features['img_name'], tf.int64)
     # img_name = tf.cast(features['img_name'], tf.uint8)
 
-    image.set_shape([features['height'] * features['width'] * CHANNEL])
+    image.set_shape([WEIGHT * HEIGHT * CHANNEL])
     image = tf.cast(image, tf.float32) * (1. / 255) - 0.5
-    image = tf.reshape(image, [features['height'], features['width'], CHANNEL])
+    image = tf.reshape(image, [WEIGHT, HEIGHT, CHANNEL])
     # image = tf.image.resize_images(image, tf.pack(tf.constant(60, dtype=tf.int32), tf.constant(80, dtype=tf.int32)))
 
     # preprocessing
