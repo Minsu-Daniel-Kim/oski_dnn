@@ -40,18 +40,19 @@ models = {
 
 def main(train_dir, batch_size, num_batches, logdir, prediction_type, label, gpu):
 
-    config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = gpu
-    session = tf.Session(config=config)
+    # config = tf.ConfigProto()
+    # config.gpu_options.per_process_gpu_memory_fraction = gpu
+    # session = tf.Session(config=config)
 
     if prediction_type == "regression":
         print('regression is called')
 
-
-
-
         images, angles = inputs(train_dir, True, batch_size, num_batches, label, one_hot_labels=False)
 
+
+
+        # print(images)
+        # print(angles)
 
         predictions, end_points = models[FLAGS.model](images, NUM_CLASS=1, is_training=True)
         slim.losses.mean_squared_error(predictions, angles)
