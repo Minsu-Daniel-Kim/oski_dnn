@@ -46,8 +46,8 @@ def read_and_decode_submission(filename_queue):
         features={
             'image_raw': tf.FixedLenFeature([], tf.string),
             # 'angle': tf.FixedLenFeature([], tf.float32),
-            # 'label': tf.FixedLenFeature([], tf.int64),
-            # 'label': tf.FixedLenFeature([], tf.int64),
+            'height': tf.FixedLenFeature([], tf.int64),
+            'width': tf.FixedLenFeature([], tf.int64),
             'img_name': tf.FixedLenFeature([], tf.string)
         })
 
@@ -59,9 +59,9 @@ def read_and_decode_submission(filename_queue):
     img_name = tf.decode_raw(features['img_name'], tf.int64)
     # img_name = tf.cast(features['img_name'], tf.uint8)
 
-    image.set_shape([HEIGHT * WEIGHT * CHANNEL])
+    image.set_shape([features['height'] * features['width'] * CHANNEL])
     image = tf.cast(image, tf.float32) * (1. / 255) - 0.5
-    image = tf.reshape(image, [HEIGHT, WEIGHT, CHANNEL])
+    image = tf.reshape(image, [features['height'], features['width'], CHANNEL])
     # image = tf.image.resize_images(image, tf.pack(tf.constant(60, dtype=tf.int32), tf.constant(80, dtype=tf.int32)))
 
     # preprocessing
